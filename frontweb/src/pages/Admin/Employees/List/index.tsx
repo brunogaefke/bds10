@@ -8,6 +8,7 @@ import { SpringPage } from 'types/vendor/spring';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from 'util/requests';
 import { Employee } from 'types/employee';
+import { hasAnyRoles } from 'util/auth';
 
 type ControlComponentData = {
   activePage: number;
@@ -35,7 +36,7 @@ const List = () => {
   const getEmployees = useCallback(() => {
     const config: AxiosRequestConfig = {
       method: 'GET',
-      withCredentials: 'true',
+      withCredentials: true,
       url: '/employees',
       params: {
         page: controlComponentData.activePage,
@@ -55,11 +56,12 @@ const List = () => {
   }, [getEmployees]);
   return (
     <>
+    {hasAnyRoles(['ROLE_ADMIN']) &&
       <Link to="/admin/employees/create">
         <button className="btn btn-primary text-white btn-crud-add">
           ADICIONAR
         </button>
-      </Link>
+      </Link>}
 
       <div className="row">
         {page?.content.map((employee) => (

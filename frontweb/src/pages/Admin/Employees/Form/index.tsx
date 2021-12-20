@@ -32,8 +32,10 @@ const Form = () => {
   } = useForm<Employee>();
 
   useEffect(() => {
-    requestBackend({ url: `/departments` }).then((response) => {
-      setSelectCategories(response.data.content);
+    requestBackend({ 
+      url: `/departments`,
+      withCredentials: true  }).then((response) => {
+      setSelectCategories(response.data);
     });
   }, []);
 
@@ -143,7 +145,7 @@ const Form = () => {
                       getOptionValue={(department: Department) =>
                         String(department.id)
                       }
-                      inputId="department"
+                      inputId="departments"
                     />
                   )}
                 />
