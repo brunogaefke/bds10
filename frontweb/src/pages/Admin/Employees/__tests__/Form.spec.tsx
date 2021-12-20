@@ -103,7 +103,7 @@ describe('Employee form create tests', () => {
         userEvent.type(emailInput, 'abel@gmail.com');
 
         await waitFor(() => {
-            const messages = screen.queryAllByText('Campo obrigatório');
+            const messages = screen.queryAllByText('Campo obrigatório.');
             expect(messages).toHaveLength(0);
         });
     });

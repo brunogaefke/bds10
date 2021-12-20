@@ -1,8 +1,8 @@
 import { Department } from "./department"
 
 export type Employee = {
-    id: number;
+    id?: number;
     name: string;
     email: string;
-    department: Department;
+    department?: Department;
 }
