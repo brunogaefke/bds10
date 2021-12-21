@@ -27,10 +27,6 @@ const List = () => {
   const handlePageChange = (pageNumber: number) => {
     setControlComponentData({activePage: pageNumber, employee: controlComponentData.employee})
   }
-
-  const handleSubmitFilter = (data: Employee) => {
-    setControlComponentData({activePage: 0, employee: data})
-  }
   
 
   const getEmployees = useCallback(() => {

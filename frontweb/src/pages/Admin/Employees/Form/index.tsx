@@ -17,8 +17,6 @@ const Form = () => {
 
   const { employeeId } = useParams<UrlParams>();
 
-  const isEditing = employeeId !== 'create';
-
   const history = useHistory();
 
   const [selectCategories, setSelectCategories] = useState<Department[]>([]);
@@ -32,33 +30,37 @@ const Form = () => {
   } = useForm<Employee>();
 
   useEffect(() => {
-    requestBackend({ 
+    requestBackend({
       url: `/departments`,
-      withCredentials: true  }).then((response) => {
+      withCredentials: true
+    }).then((response) => {
       setSelectCategories(response.data);
     });
   }, []);
 
   useEffect(() => {
-    if (isEditing) {
-      requestBackend({ url: `/employees/${employeeId}` }).then((response) => {
+      requestBackend({
+        url: `/employees/${employeeId},`,
+        withCredentials: true
+      }).then((response) => {
         const employee = response.data as Employee;
 
         setValue('name', employee.name);
         setValue('email', employee.email);
         setValue('department', employee.department);
       });
-    }
-  }, [isEditing, employeeId, setValue]);
+    
+  }, [ employeeId, setValue]);
 
   const onSubmit = (formData: Employee) => {
     const data = {
-      ...formData
+      ...formData,
+
     };
 
     const config: AxiosRequestConfig = {
-      method: isEditing ? 'PUT' : 'POST',
-      url: isEditing ? `/employees/${employeeId}` : '/employees',
+      method: 'POST',
+      url: '/employees',
       data,
       withCredentials: true,
     };
@@ -67,9 +69,9 @@ const Form = () => {
       toast.info('Cadastrado com sucesso');
       history.push('/admin/employees');
     })
-    .catch(() => {
-      toast.error('Erro ao cadastrar funcionário');
-    });
+      .catch(() => {
+        toast.error('Erro ao cadastrar funcionário');
+      });
   };
 
 
@@ -87,14 +89,13 @@ const Form = () => {
             <div className="col employee-crud-inputs-left-container">
 
               <div className="margin-bottom-30">
-              <input
+                <input
                   {...register('name', {
                     required: 'Campo obrigatório',
                   })}
                   type="text"
-                  className={`form-control base-input ${
-                    errors.name ? 'is-invalid' : ''
-                  }`}
+                  className={`form-control base-input ${errors.name ? 'is-invalid' : ''
+                    }`}
                   placeholder="Nome do funcionário"
                   name="name"
                   data-testid="name"
@@ -105,7 +106,7 @@ const Form = () => {
               </div>
 
               <div className="margin-bottom-30">
-              <input
+                <input
                   {...register('email', {
                     required: 'Campo obrigatório',
                     pattern: {
@@ -114,9 +115,8 @@ const Form = () => {
                     },
                   })}
                   type="text"
-                  className={`form-control base-input ${
-                    errors.name ? 'is-invalid' : ''
-                  }`}
+                  className={`form-control base-input ${errors.name ? 'is-invalid' : ''
+                    }`}
                   placeholder="Email do funcionário"
                   name="email"
                   data-testid="email"
@@ -125,12 +125,12 @@ const Form = () => {
                   {errors.email?.message}
                 </div>
                 <div className="invalid-feedback d-block">
-                  
+
                 </div>
               </div>
 
               <div className="margin-bottom-30">
-                <label htmlFor='department' className="d-none">Departamentos</label>
+                <label htmlFor='department' className="d-none">Departamento</label>
                 <Controller
                   name="department"
                   rules={{ required: true }}
@@ -140,18 +140,17 @@ const Form = () => {
                       {...field}
                       options={selectCategories}
                       classNamePrefix="product-crud-select"
-                      isMulti
                       getOptionLabel={(department: Department) => department.name}
                       getOptionValue={(department: Department) =>
                         String(department.id)
                       }
-                      inputId="departments"
+                      inputId="department"
                     />
                   )}
                 />
                 {errors.department && (
                   <div className="invalid-feedback d-block">
-                    Campo Obrigatório
+                    Campo obrigatório
                   </div>
                 )}
               </div>
