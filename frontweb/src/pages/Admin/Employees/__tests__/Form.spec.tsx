@@ -21,7 +21,7 @@ describe('Employee form create tests', () => {
                 <Form />
             </Router>
         );
-    
+
         const nameInput = screen.getByTestId("name");
         const emailInput = screen.getByTestId("email");
         const categoriesInput = screen.getByLabelText("Departamento");
@@ -30,7 +30,7 @@ describe('Employee form create tests', () => {
         userEvent.type(nameInput, 'Abel');
         userEvent.type(emailInput, 'abel@gmail.com');
 
-        const submitButton = screen.getByRole('button', { name: /salvar/i})
+        const submitButton = screen.getByRole('button', { name: /salvar/i })
         userEvent.click(submitButton);
 
         await waitFor(() => {
@@ -48,8 +48,8 @@ describe('Employee form create tests', () => {
                 <Form />
             </Router>
         );
-    
-        const submitButton = screen.getByRole('button', { name: /salvar/i})
+
+        const submitButton = screen.getByRole('button', { name: /salvar/i })
         userEvent.click(submitButton);
 
         await waitFor(() => {
@@ -65,11 +65,11 @@ describe('Employee form create tests', () => {
                 <Form />
             </Router>
         );
-    
+
         const emailInput = screen.getByTestId("email");
         userEvent.type(emailInput, 'abel@gmail.');
 
-        const submitButton = screen.getByRole('button', { name: /salvar/i})
+        const submitButton = screen.getByRole('button', { name: /salvar/i })
         userEvent.click(submitButton);
 
         await waitFor(() => {
@@ -85,8 +85,8 @@ describe('Employee form create tests', () => {
                 <Form />
             </Router>
         );
-    
-        const submitButton = screen.getByRole('button', { name: /salvar/i})
+
+        const submitButton = screen.getByRole('button', { name: /salvar/i })
         userEvent.click(submitButton);
 
         await waitFor(() => {
@@ -115,8 +115,8 @@ describe('Employee form create tests', () => {
                 <Form />
             </Router>
         );
-    
-        const cancelButton = screen.getByRole('button', { name: /cancelar/i})
+
+        const cancelButton = screen.getByRole('button', { name: /cancelar/i })
         userEvent.click(cancelButton);
 
         await waitFor(() => {

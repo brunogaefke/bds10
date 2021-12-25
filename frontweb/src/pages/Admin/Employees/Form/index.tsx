@@ -9,13 +9,8 @@ import './styles.css';
 import { Department } from 'types/department';
 import { Employee } from 'types/employee';
 
-type UrlParams = {
-  employeeId: string;
-};
 
 const Form = () => {
-
-  const { employeeId } = useParams<UrlParams>();
 
   const history = useHistory();
 
@@ -39,18 +34,18 @@ const Form = () => {
   }, []);
 
   useEffect(() => {
-      requestBackend({
-        url: `/employees/${employeeId},`,
-        withCredentials: true
-      }).then((response) => {
-        const employee = response.data as Employee;
+    requestBackend({
+      url: `/employees/`,
+      withCredentials: true
+    }).then((response) => {
+      const employee = response.data as Employee;
 
-        setValue('name', employee.name);
-        setValue('email', employee.email);
-        setValue('department', employee.department);
-      });
-    
-  }, [ employeeId, setValue]);
+      setValue('name', employee.name);
+      setValue('email', employee.email);
+      setValue('department', employee.department);
+    });
+
+  }, [setValue]);
 
   const onSubmit = (formData: Employee) => {
     const data = {
